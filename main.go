@@ -4,6 +4,7 @@ import (
 	"embed"
 	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"net/http"
 
@@ -38,12 +39,13 @@ func main() {
 		}
 
 		fidURL := fmt.Sprintf("%s/%s", "http://seaweedfs:8080", assignResp.Fid)
-		contentType := r.Header.Get("Content-Type")
-		_, err = store.Upload(fidURL, contentType, mf)
+		form := map[string]io.Reader{"filepath": mf}
+		_, err = store.Upload(fidURL, form)
 		if err != nil {
 			log.Fatal("Upload err: ", err)
 		}
 
+		log.Println("url:", fidURL)
 		http.Redirect(w, r, "/", http.StatusFound)
 	}).Methods("POST")
 
