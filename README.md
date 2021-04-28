@@ -1,5 +1,7 @@
 # seaweedfs-test
 
+status: `fixed`
+
 This a test where it manifests the error: `Upload err:multipart: NextPart: EOF`
 
 Prerequisite: docker, docker-compose, golang 1.16
